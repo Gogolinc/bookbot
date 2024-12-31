@@ -22,11 +22,23 @@ def count_letters(text):
         letter_counts[char] = letter_counts.get(char, 0) + 1
     return letter_counts
 
+#indicates what a list should use as a comparator value
+def sort_on(d):
+    return d["num"]
+
+def convert_char_dict_to_sorted_list(dict):
+    sorted_list = []
+    for c in dict:
+        sorted_list.append({"char": c, "num": dict[c]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
+
 def format_report(path, number_of_words, letter_counts):
+    sorted_letter_counts = convert_char_dict_to_sorted_list(letter_counts)
     print(f"--- Begin report of {path} ---\n")
-    print(f"{number_of_words} words forund in the document \n\n")
-    for lc in letter_counts:
-        print(f"The '{lc}' character was found {letter_counts[lc]} times")
+    print(f"{number_of_words} words found in the document \n\n")
+    for lc in sorted_letter_counts:
+        print(f"The '{lc['char']}' character was found {lc['num']} times")
 
 
 main()
